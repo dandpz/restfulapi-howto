@@ -199,6 +199,7 @@ definitions:
         type: "string"
       dueDate:
         type: "string"
+        format: "date"
       status:
         type: "string"
         description: "to-do Status"
