@@ -186,6 +186,7 @@ paths:
 securityDefinitions:
   BasicAuth:
     type: "basic"
+    x-basicInfoFunc: "swagger_server.auth.basic_auth"
 definitions:
   Todo:
     type: "object"
