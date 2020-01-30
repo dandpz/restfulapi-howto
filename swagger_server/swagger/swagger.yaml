@@ -174,7 +174,7 @@ paths:
           schema:
             $ref: "#/definitions/Todo"
         "400":
-          description: "IBad request"
+          description: "Bad request"
         "401":
           description: "The request requires user authentication."
         "403":

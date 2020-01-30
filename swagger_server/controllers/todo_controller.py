@@ -1,9 +1,11 @@
 import connexion
-import six
+from werkzeug.exceptions import BadRequest
 
-from swagger_server.models.paginated_response_data import PaginatedResponseData  # noqa: E501
+from swagger_server.database.models.todo import TodoModel
+from swagger_server.models.paginated_response_data import (
+    PaginatedResponseData,
+)  # noqa: E501
 from swagger_server.models.todo import Todo  # noqa: E501
-from swagger_server import util
 
 
 def create_todo(body):  # noqa: E501
@@ -18,7 +20,10 @@ def create_todo(body):  # noqa: E501
     """
     if connexion.request.is_json:
         body = Todo.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
+        TodoModel.from_obj(body).save()
+        return None, 200
+    else:
+        raise BadRequest("missing body")
 
 
 def delete_todo_by_id(todoId):  # noqa: E501
@@ -31,7 +36,7 @@ def delete_todo_by_id(todoId):  # noqa: E501
 
     :rtype: Todo
     """
-    return 'do some magic!'
+    return TodoModel.delete_by_id(todoId)
 
 
 def get_todo_by_id(todoId):  # noqa: E501
@@ -44,7 +49,7 @@ def get_todo_by_id(todoId):  # noqa: E501
 
     :rtype: Todo
     """
-    return 'do some magic!'
+    return TodoModel.get_by_id(todoId)
 
 
 def get_todo_list(status=None, page=None, size=None):  # noqa: E501
@@ -61,7 +66,7 @@ def get_todo_list(status=None, page=None, size=None):  # noqa: E501
 
     :rtype: PaginatedResponseData
     """
-    return 'do some magic!'
+    return TodoModel.get_all(page, size, status)
 
 
 def update_todo_by_id(todoId, body):  # noqa: E501
@@ -78,4 +83,7 @@ def update_todo_by_id(todoId, body):  # noqa: E501
     """
     if connexion.request.is_json:
         body = Todo.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
+        TodoModel.from_obj(body).save()
+        return None, 200
+    else:
+        raise BadRequest("missing body")

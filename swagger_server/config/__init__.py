@@ -10,12 +10,12 @@ class Config(object):
 
 
 class Development(Config):
-    SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/test.db'
+    SQLALCHEMY_DATABASE_URI = "sqlite:////tmp/test.db"
     FLASK_ENV = "development"
 
 
 class Testing(Config):
-    SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/test.db'
+    SQLALCHEMY_DATABASE_URI = "sqlite:////tmp/test.db"
     FLASK_ENV = "development"
 
 
