@@ -1,6 +1,5 @@
 # coding: utf-8
 
-from __future__ import absolute_import
 from datetime import date, datetime  # noqa: F401
 
 from typing import List, Dict  # noqa: F401
@@ -15,7 +14,14 @@ class Todo(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, id: int=None, name: str=None, description: str=None, due_date: str=None, status: str=None):  # noqa: E501
+    def __init__(
+        self,
+        id: int = None,
+        name: str = None,
+        description: str = None,
+        due_date: date = None,
+        status: str = None,
+    ):  # noqa: E501
         """Todo - a model defined in Swagger
 
         :param id: The id of this Todo.  # noqa: E501
@@ -25,24 +31,24 @@ class Todo(Model):
         :param description: The description of this Todo.  # noqa: E501
         :type description: str
         :param due_date: The due_date of this Todo.  # noqa: E501
-        :type due_date: str
+        :type due_date: date
         :param status: The status of this Todo.  # noqa: E501
         :type status: str
         """
         self.swagger_types = {
-            'id': int,
-            'name': str,
-            'description': str,
-            'due_date': str,
-            'status': str
+            "id": int,
+            "name": str,
+            "description": str,
+            "due_date": date,
+            "status": str,
         }
 
         self.attribute_map = {
-            'id': 'id',
-            'name': 'name',
-            'description': 'description',
-            'due_date': 'dueDate',
-            'status': 'status'
+            "id": "id",
+            "name": "name",
+            "description": "description",
+            "due_date": "dueDate",
+            "status": "status",
         }
 
         self._id = id
@@ -52,7 +58,7 @@ class Todo(Model):
         self._status = status
 
     @classmethod
-    def from_dict(cls, dikt) -> 'Todo':
+    def from_dict(cls, dikt) -> "Todo":
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -126,22 +132,22 @@ class Todo(Model):
         self._description = description
 
     @property
-    def due_date(self) -> str:
+    def due_date(self) -> date:
         """Gets the due_date of this Todo.
 
 
         :return: The due_date of this Todo.
-        :rtype: str
+        :rtype: date
         """
         return self._due_date
 
     @due_date.setter
-    def due_date(self, due_date: str):
+    def due_date(self, due_date: date):
         """Sets the due_date of this Todo.
 
 
         :param due_date: The due_date of this Todo.
-        :type due_date: str
+        :type due_date: date
         """
 
         self._due_date = due_date
@@ -169,8 +175,9 @@ class Todo(Model):
         allowed_values = ["done", "late", "in progress", "to do"]  # noqa: E501
         if status not in allowed_values:
             raise ValueError(
-                "Invalid value for `status` ({0}), must be one of {1}"
-                .format(status, allowed_values)
+                "Invalid value for `status` ({0}), must be one of {1}".format(
+                    status, allowed_values
+                )
             )
 
         self._status = status

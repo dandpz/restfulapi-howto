@@ -174,7 +174,7 @@ paths:
           schema:
             $ref: "#/definitions/Todo"
         "400":
-          description: "IBad request"
+          description: "Bad request"
         "401":
           description: "The request requires user authentication."
         "403":
@@ -186,6 +186,7 @@ paths:
 securityDefinitions:
   BasicAuth:
     type: "basic"
+    x-basicInfoFunc: "swagger_server.auth.basic_auth"
 definitions:
   Todo:
     type: "object"
@@ -213,7 +214,7 @@ definitions:
     example:
       name: "Xmas present"
       description: "Christams present"
-      dueDate: "2020/12/25"
+      dueDate: "2020-12-25"
       status: "to do"
   PaginatedResponseData:
     type: "object"

@@ -1,6 +1,5 @@
 # coding: utf-8
 
-from __future__ import absolute_import
 from datetime import date, datetime  # noqa: F401
 
 from typing import List, Dict  # noqa: F401
@@ -15,7 +14,14 @@ class PaginatedResponseData(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, total: int=None, count: int=None, page: int=None, size: int=None, resources: List[object]=None):  # noqa: E501
+    def __init__(
+        self,
+        total: int = None,
+        count: int = None,
+        page: int = None,
+        size: int = None,
+        resources: List[object] = None,
+    ):  # noqa: E501
         """PaginatedResponseData - a model defined in Swagger
 
         :param total: The total of this PaginatedResponseData.  # noqa: E501
@@ -30,19 +36,19 @@ class PaginatedResponseData(Model):
         :type resources: List[object]
         """
         self.swagger_types = {
-            'total': int,
-            'count': int,
-            'page': int,
-            'size': int,
-            'resources': List[object]
+            "total": int,
+            "count": int,
+            "page": int,
+            "size": int,
+            "resources": List[object],
         }
 
         self.attribute_map = {
-            'total': 'total',
-            'count': 'count',
-            'page': 'page',
-            'size': 'size',
-            'resources': 'resources'
+            "total": "total",
+            "count": "count",
+            "page": "page",
+            "size": "size",
+            "resources": "resources",
         }
 
         self._total = total
@@ -52,7 +58,7 @@ class PaginatedResponseData(Model):
         self._resources = resources
 
     @classmethod
-    def from_dict(cls, dikt) -> 'PaginatedResponseData':
+    def from_dict(cls, dikt) -> "PaginatedResponseData":
         """Returns the dict as a model
 
         :param dikt: A dict.
