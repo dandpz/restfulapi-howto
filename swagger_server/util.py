@@ -1,7 +1,10 @@
 import datetime
+from functools import wraps
 
 import six
 import typing
+
+from flask import current_app, request
 
 
 def _deserialize(data, klass):
@@ -107,9 +110,9 @@ def deserialize_model(data, klass):
 
     for attr, attr_type in six.iteritems(instance.swagger_types):
         if (
-            data is not None
-            and instance.attribute_map[attr] in data
-            and isinstance(data, (list, dict))
+                data is not None
+                and instance.attribute_map[attr] in data
+                and isinstance(data, (list, dict))
         ):
             value = data[instance.attribute_map[attr]]
             setattr(instance, attr, _deserialize(value, attr_type))
@@ -141,3 +144,13 @@ def _deserialize_dict(data, boxed_type):
     :rtype: dict
     """
     return {k: _deserialize(v, boxed_type) for k, v in six.iteritems(data)}
+
+
+def log(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        current_app.logger.debug(f"Client IP ADDRESS: {request.remote_addr}")
+        current_app.logger.debug(f"Client IP ADDRESS: {request.endpoint}")
+        current_app.logger.debug(f"Client IP ADDRESS: {request.user_agent}")
+        return func(*args, **kwargs)
+    return wrapper

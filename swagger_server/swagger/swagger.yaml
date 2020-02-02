@@ -214,7 +214,7 @@ definitions:
     example:
       name: "Xmas present"
       description: "Christams present"
-      dueDate: "2020/12/25"
+      dueDate: "2020-12-25"
       status: "to do"
   PaginatedResponseData:
     type: "object"

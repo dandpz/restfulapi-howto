@@ -14,7 +14,7 @@ class Status(enum.Enum):
 class TodoModel(db.Model):
     __tablename__ = "todo"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), unique=True)
+    name = db.Column(db.String(64))
     description = db.Column(db.String(256), nullable=True)
     due_date = db.Column(db.Date, nullable=True)
     status = db.Column(db.Enum(Status), nullable=False)
@@ -25,7 +25,7 @@ class TodoModel(db.Model):
             name=self.name,
             description=self.description,
             due_date=self.due_date,
-            status=self.status,
+            status=self.status.value,
         )
 
     def __repr__(self):
@@ -38,7 +38,7 @@ class TodoModel(db.Model):
             name=obj.name,
             description=obj.description,
             due_date=obj.due_date,
-            status=obj.status,
+            status=Status(obj.status)
         )
 
     def save(self):
@@ -50,9 +50,12 @@ class TodoModel(db.Model):
             cls,
             page: int = 1,
             size: int = 20,
-            status: dict = None
+            status: str = None
     ):
-        query = cls.query.filter_by(**status).paginate(page, size, False)
+        if status:
+            query = cls.query.filter_by(status=Status(status)).paginate(page, size, False)
+        else:
+            query = cls.query.paginate(page, size, False)
         total = query.total
         items = query.items
         return PaginatedResponseData(

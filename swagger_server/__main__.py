@@ -30,6 +30,7 @@ def configure_app(flask_app):
 
     @flask_app.before_first_request
     def create_database():
+        db.drop_all()
         db.create_all()
 
 

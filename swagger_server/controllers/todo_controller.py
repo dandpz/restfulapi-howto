@@ -1,4 +1,5 @@
 import connexion
+from flask import current_app, request
 from werkzeug.exceptions import BadRequest
 
 from swagger_server.database.models.todo import TodoModel
@@ -6,8 +7,10 @@ from swagger_server.models.paginated_response_data import (
     PaginatedResponseData,
 )  # noqa: E501
 from swagger_server.models.todo import Todo  # noqa: E501
+from swagger_server.util import log
 
 
+@log
 def create_todo(body):  # noqa: E501
     """Create a new to-do
 
@@ -18,6 +21,7 @@ def create_todo(body):  # noqa: E501
 
     :rtype: None
     """
+    current_app.logger.debug(f"Client IP ADDRESS: {request.remote_addr}")
     if connexion.request.is_json:
         body = Todo.from_dict(connexion.request.get_json())  # noqa: E501
         TodoModel.from_obj(body).save()
@@ -26,6 +30,7 @@ def create_todo(body):  # noqa: E501
         raise BadRequest("missing body")
 
 
+@log
 def delete_todo_by_id(todoId):  # noqa: E501
     """Delete existing to-do by Id
 
@@ -39,6 +44,7 @@ def delete_todo_by_id(todoId):  # noqa: E501
     return TodoModel.delete_by_id(todoId)
 
 
+@log
 def get_todo_by_id(todoId):  # noqa: E501
     """Retrieve to-do by Id
 
@@ -52,6 +58,7 @@ def get_todo_by_id(todoId):  # noqa: E501
     return TodoModel.get_by_id(todoId)
 
 
+@log
 def get_todo_list(status=None, page=None, size=None):  # noqa: E501
     """Retrieve list of to-do
 
@@ -69,6 +76,7 @@ def get_todo_list(status=None, page=None, size=None):  # noqa: E501
     return TodoModel.get_all(page, size, status)
 
 
+@log
 def update_todo_by_id(todoId, body):  # noqa: E501
     """Update existing to-do by Id
 
@@ -83,7 +91,6 @@ def update_todo_by_id(todoId, body):  # noqa: E501
     """
     if connexion.request.is_json:
         body = Todo.from_dict(connexion.request.get_json())  # noqa: E501
-        TodoModel.from_obj(body).save()
-        return None, 200
+        return TodoModel.update_by_id(todoId, body), 200
     else:
         raise BadRequest("missing body")
