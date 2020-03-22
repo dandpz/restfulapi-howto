@@ -110,9 +110,9 @@ def deserialize_model(data, klass):
 
     for attr, attr_type in six.iteritems(instance.swagger_types):
         if (
-                data is not None
-                and instance.attribute_map[attr] in data
-                and isinstance(data, (list, dict))
+            data is not None
+            and instance.attribute_map[attr] in data
+            and isinstance(data, (list, dict))
         ):
             value = data[instance.attribute_map[attr]]
             setattr(instance, attr, _deserialize(value, attr_type))
@@ -153,4 +153,5 @@ def log(func):
         current_app.logger.debug(f"Client IP ADDRESS: {request.endpoint}")
         current_app.logger.debug(f"Client IP ADDRESS: {request.user_agent}")
         return func(*args, **kwargs)
+
     return wrapper
