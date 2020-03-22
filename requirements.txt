@@ -6,3 +6,4 @@ python-dotenv==0.10.3
 setuptools==40.8.0
 swagger_ui_bundle==0.0.6
 Flask-SQLAlchemy==2.4.1
+gunicorn==20.0.4
