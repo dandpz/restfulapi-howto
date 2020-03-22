@@ -38,7 +38,7 @@ class TodoModel(db.Model):
             name=obj.name,
             description=obj.description,
             due_date=obj.due_date,
-            status=Status(obj.status)
+            status=Status(obj.status),
         )
 
     def save(self):
@@ -46,14 +46,11 @@ class TodoModel(db.Model):
         db.session.commit()
 
     @classmethod
-    def get_all(
-            cls,
-            page: int = 1,
-            size: int = 20,
-            status: str = None
-    ):
+    def get_all(cls, page: int = 1, size: int = 20, status: str = None):
         if status:
-            query = cls.query.filter_by(status=Status(status)).paginate(page, size, False)
+            query = cls.query.filter_by(status=Status(status)).paginate(
+                page, size, False
+            )
         else:
             query = cls.query.paginate(page, size, False)
         total = query.total
