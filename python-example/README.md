@@ -1,6 +1,6 @@
-# RESTful API - HOWTO
-In this repository you can find the code related to the series of article about design and implementation of a service.
-You can find the article at [this](https://medium.com/@daniele.dapuzzo/restful-api-how-to-part-1-design-4f89803dff15) link.
+# RESTful API - HOWTO [Python]
+In this folder you can find the code related to the series of article about design and implementation of a service with Python.
+You can find the articles at [this](https://medium.com/@daniele.dapuzzo/restful-api-how-to-part-1-design-4f89803dff15) link.
 
 The repository will be updated during the development of this series.
 
