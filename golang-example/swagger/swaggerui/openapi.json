@@ -1,0 +1,386 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "This is an example server for TO-DO list. \nThis is part of the collection of articles dedicated to the development of RESTful API. To know more visit the [repository](https://github.com/dandpz/restfulapi-howto) containing the code for these examples and more.",
+    "version": "1.0.0",
+    "title": "TO-DO list",
+    "license": {
+      "name": "MIT",
+      "url": "https://choosealicense.com/licenses/mit/"
+    }
+  },
+  "tags": [
+    {
+      "name": "todo",
+      "description": "Everything about your to-do"
+    }
+  ],
+  "security": [
+    {
+      "BasicAuth": []
+    }
+  ],
+  "paths": {
+    "/todo": {
+      "get": {
+        "tags": [
+          "todo"
+        ],
+        "summary": "Retrieve list of to-do",
+        "description": "Return a paginated list of to-do objects",
+        "operationId": "get_todo_list",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "description": "filter result on to-do status",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "done",
+                "late",
+                "in progress",
+                "to do"
+              ]
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Number of records to return per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponseData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "The request requires user authentication."
+          },
+          "403": {
+            "description": "The server understood the request, but is refusing to authorize it."
+          }
+        },
+        "x-swagger-router-controller": "swagger_server.controllers.todo_controller"
+      },
+      "post": {
+        "tags": [
+          "todo"
+        ],
+        "summary": "Create a new to-do",
+        "description": "Create a to-do",
+        "operationId": "create_todo",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Todo"
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "The request requires user authentication."
+          },
+          "403": {
+            "description": "The server understood the request, but is refusing to authorize it."
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "x-swagger-router-controller": "swagger_server.controllers.todo_controller"
+      }
+    },
+    "/todo/{todoId}": {
+      "get": {
+        "tags": [
+          "todo"
+        ],
+        "summary": "Retrieve to-do by Id",
+        "description": "Return a to-do object if exists",
+        "operationId": "get_todo_by_id",
+        "parameters": [
+          {
+            "name": "todoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Todo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "The request requires user authentication."
+          },
+          "403": {
+            "description": "The server understood the request, but is refusing to authorize it."
+          },
+          "404": {
+            "description": "Resource not found"
+          }
+        },
+        "x-swagger-router-controller": "swagger_server.controllers.todo_controller"
+      },
+      "put": {
+        "tags": [
+          "todo"
+        ],
+        "summary": "Update existing to-do by Id",
+        "description": "Update a to-do object if exists",
+        "operationId": "update_todo_by_id",
+        "parameters": [
+          {
+            "name": "todoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Todo"
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "The request requires user authentication."
+          },
+          "403": {
+            "description": "The server understood the request, but is refusing to authorize it."
+          },
+          "404": {
+            "description": "Resource not found"
+          }
+        },
+        "x-swagger-router-controller": "swagger_server.controllers.todo_controller"
+      },
+      "delete": {
+        "tags": [
+          "todo"
+        ],
+        "summary": "Delete existing to-do by Id",
+        "description": "Delete a to-do object if exists",
+        "operationId": "delete_todo_by_id",
+        "parameters": [
+          {
+            "name": "todoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Todo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "The request requires user authentication."
+          },
+          "403": {
+            "description": "The server understood the request, but is refusing to authorize it."
+          },
+          "404": {
+            "description": "Resource not found"
+          }
+        },
+        "x-swagger-router-controller": "swagger_server.controllers.todo_controller"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://localhost:8080/v1"
+    },
+    {
+      "url": "http://localhost:8080/v1"
+    }
+  ],
+  "components": {
+    "parameters": {
+      "page": {
+        "name": "page",
+        "in": "query",
+        "description": "Page number",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "default": 1
+        }
+      },
+      "size": {
+        "name": "size",
+        "in": "query",
+        "description": "Number of records to return per page",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "default": 20
+        }
+      }
+    },
+    "requestBodies": {
+      "Todo": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Todo"
+            }
+          }
+        },
+        "required": true
+      }
+    },
+    "securitySchemes": {
+      "BasicAuth": {
+        "type": "http",
+        "x-basicInfoFunc": "swagger_server.auth.basic_auth",
+        "scheme": "basic"
+      }
+    },
+    "schemas": {
+      "Todo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "dueDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "status": {
+            "type": "string",
+            "description": "to-do Status",
+            "enum": [
+              "done",
+              "late",
+              "in progress",
+              "to do"
+            ]
+          }
+        },
+        "xml": {
+          "name": "Todo"
+        },
+        "example": {
+          "name": "Xmas present",
+          "description": "Christams present",
+          "dueDate": "2020-12-25T00:00:00.000Z",
+          "status": "to do"
+        }
+      },
+      "PaginatedResponseData": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "description": "Total amount of resource"
+          },
+          "count": {
+            "type": "integer",
+            "description": "Count of the resources in the current response"
+          },
+          "page": {
+            "type": "integer",
+            "description": "Page number"
+          },
+          "size": {
+            "type": "integer",
+            "description": "Number of resource per page"
+          },
+          "resources": {
+            "type": "array",
+            "description": "Resources",
+            "items": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "xml": {
+          "name": "PaginatedResponseData"
+        },
+        "example": {
+          "total": 10,
+          "size": 5,
+          "count": 5,
+          "resources": [
+            {},
+            {},
+            {},
+            {},
+            {}
+          ],
+          "page": 1
+        }
+      }
+    }
+  }
+}
