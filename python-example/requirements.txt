@@ -1,5 +1,5 @@
 flask==1.1.1
-werkzeug==0.16.0
+werkzeug==2.2.3
 connexion[swagger-ui]==2.5.1
 python_dateutil==2.6.0
 python-dotenv==0.10.3
